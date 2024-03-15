@@ -2,10 +2,22 @@ namespace Menu;
 using Datos;
 class Operaciones
 {
-    Consulta cons = new Consulta();
-    MetodosOpc metod = new MetodosOpc();
-
-
+    MetodosOpc metodos = new MetodosOpc();
+    int opcion = 0;
+    public void Metodo()
+    {
+        do{
+            try
+            {
+                opcion = MenuPrincipal.Menu();
+                break;
+            }
+            catch(FormatException)
+            {
+                Console.WriteLine("Dato no válido");
+            }
+        }while(true);
+    }
 
 
     
@@ -13,15 +25,17 @@ class Operaciones
 
 class MetodosOpc
 {
-    public void Registro()
+    Consulta cons = new Consulta();
+    string nombre="";
+    public void RegistrarUsuario()
     {
         Console.WriteLine("Mencione el nombre del usuario a registrar (En caso de tener dos mencionarlo igualmente \nEn caso de tener más de 2, solo mencionar 2.)");
-
+            nombre = Console.ReadLine();
         Console.WriteLine("Mencione el apellido paterno del usuario");
 
         Console.WriteLine("Mencione el apellido materno del usuario");
     
-        if(/*Condicion de que el registro haya sido exitoso o no*/)
+        if(/*Condicion de que el registro haya sido exitoso o no*/ nombre == "pedro")
         {
             Console.WriteLine("El registro a sido completado");
         }
@@ -34,12 +48,12 @@ class MetodosOpc
     {
         Console.WriteLine("Mencione el nombre del usuario a recuperar");
         Console.WriteLine("En caso de tener más de uno, solo mencionar el primero");
-
+            nombre = Console.ReadLine();
         Console.WriteLine("Mencione el apellido paterno");
 
         Console.WriteLine("Mencione el apellido materno");
 
-        if(/* Si la consulta encontro al usuario imprimir todos los datos*/)
+        if(/* Si la consulta encontro al usuario imprimir todos los datos*/nombre == "Pedro")
         {
 
         }
@@ -60,11 +74,25 @@ class MetodosOpc
         Console.WriteLine("Buscando...");
     }
 
-    public void bajaUsuario()
+    public void BajaUsuario()
     {
 
     }
-    //En modificaciones al usuario se puede modificar apellidos, nombres, etc?
-    // O unicamente debo poder modificar el estatus?
+    //En modificaciones al usuario se puede modificar apellidos, nombres, etc? Sí
+    // O unicamente debo poder modificar el estatus? no
+    public void ModificarUsuario()
+    {
+        Console.WriteLine("¿Qué usuario desea modificar?");
 
+        Console.WriteLine("¿Qué apartado desea modificar del usuario?");
+
+        if(/* Caso de que la modificación haya sido correcta*/ nombre == "Pedro")
+        {
+
+        }
+        else
+        {
+
+        }
+    }
 }

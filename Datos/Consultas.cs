@@ -10,7 +10,6 @@ class Consulta : DatosCli
     public override string FactorRH { get => base.FactorRH; set => base.FactorRH = value; }
     public override string TipoSangre { get => base.TipoSangre; set => base.TipoSangre = value; }
     public override int Telefono { get => base.Telefono; set => base.Telefono = value; }
-
     protected string conexion = "server=localhost;user=root;password=;database=nombre_de_la_base_de_datos";
     public (string, string, string, string, string, string,string, int ) Datos() //Este metodo va recuperar todos los datos
     {
@@ -38,36 +37,15 @@ class Consulta : DatosCli
         //Estaría bien buscar mediante ID unicamente?
         //Y en caso de perder la ID?
         //Y si es por nombre, puede ser solo con uno?
-        switch(datoRecu.ToLower())
-        {
-            case "nombre":
-
-            break;
-            
-            case "apellido 1":
-            
-            break;
-            
-            case "apellido 2":
-            
-            break;
-            
-            case "direccion":
-            
-            break;
-            
-            case "telefono":
-            
-            break;
-            
-            case "grupo sanguineo":
-            
-            break;
-            
-            case "factor rh":
-            
-            break;
-        }
+        // switch(datoRecu.ToLower())
+        // {
+        //     case "nombre":
+        //     break;
+        //     case "apellido 1":
+        //     break;
+        //     case "apellido 2":
+        //     break;
+        // }
 
         return colum;
     }
