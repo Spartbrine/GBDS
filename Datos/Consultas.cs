@@ -14,7 +14,7 @@ class Consulta : DatosCli
     public string Nombre()
     {
         
-        query = "":
+        query = "";
         return Name;
     }
 

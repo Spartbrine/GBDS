@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/GBDS.csproj",
+      "projectUniqueName": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Archivos/GBDS/GBDS.csproj",
       "projectName": "GBDS",
-      "projectPath": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/GBDS.csproj",
+      "projectPath": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Archivos/GBDS/GBDS.csproj",
       "packagesPath": "/home/spartbrine/.nuget/packages/",
-      "outputPath": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/",
+      "outputPath": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Archivos/GBDS/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/spartbrine/.nuget/NuGet/NuGet.Config"
