@@ -2,9 +2,9 @@
 using Menu;
 class Program
 {
+    Operaciones opc = new Operaciones();
     static void Main(string[] args)
     {
-        Operaciones opc = new Operaciones();
         Console.WriteLine("Hello, World!");
     }
 }

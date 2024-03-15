@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "/home/mike/.nuget/packages/": {}
+    "/home/spartbrine/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/mike/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/GBDS.csproj",
+      "projectUniqueName": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/GBDS.csproj",
       "projectName": "GBDS",
-      "projectPath": "/home/mike/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/GBDS.csproj",
-      "packagesPath": "/home/mike/.nuget/packages/",
-      "outputPath": "/home/mike/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/",
+      "projectPath": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/GBDS.csproj",
+      "packagesPath": "/home/spartbrine/.nuget/packages/",
+      "outputPath": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/home/mike/.nuget/NuGet/NuGet.Config"
+        "/home/spartbrine/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
@@ -38,11 +38,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -64,7 +59,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.200/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/8.0.102/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

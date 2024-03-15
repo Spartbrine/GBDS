@@ -1,0 +1,15 @@
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/bin/Debug/net8.0/GBDS
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/bin/Debug/net8.0/GBDS.deps.json
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/bin/Debug/net8.0/GBDS.runtimeconfig.json
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/bin/Debug/net8.0/GBDS.dll
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/bin/Debug/net8.0/GBDS.pdb
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/GBDS.GeneratedMSBuildEditorConfig.editorconfig
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/GBDS.AssemblyInfoInputs.cache
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/GBDS.AssemblyInfo.cs
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/GBDS.csproj.CoreCompileInputs.cache
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/GBDS.sourcelink.json
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/GBDS.dll
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/refint/GBDS.dll
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/GBDS.pdb
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/GBDS.genruntimeconfig.cache
+/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/obj/Debug/net8.0/ref/GBDS.dll
