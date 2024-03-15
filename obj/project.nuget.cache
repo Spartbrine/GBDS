@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "7KFdjjCKSt/uWu3ukTFnfJf27jA0hwDO095M/3Ypd+SGyZkS8uQE5NYdqRH8AvcuQeYNWyHteAWGWz3rkNb8KQ==",
+  "dgSpecHash": "kOztTGXUjLn+AF8iO2p5HDFzkQ7yU6o/OaW1sCMwoKHFgpGsvAdrsxe8rKJaWeb/7dbiof7sahA2FSdzIDoPgw==",
   "success": true,
-  "projectFilePath": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Archivos/GBDS/GBDS.csproj",
+  "projectFilePath": "/home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/GBDS.csproj",
   "expectedPackageFiles": [
     "/home/spartbrine/.nuget/packages/bouncycastle.cryptography/2.2.1/bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "/home/spartbrine/.nuget/packages/google.protobuf/3.25.1/google.protobuf.3.25.1.nupkg.sha512",

@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = GBDS
-build_property.ProjectDir = /home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Archivos/GBDS/
+build_property.ProjectDir = /home/spartbrine/Documentos/UTM/SEGUNDO CUATRIMESTRE/POO/Tercer parcial/Codigos/GBDS/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
