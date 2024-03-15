@@ -1,0 +1,5 @@
+namespace Menu;
+class MenuPrincipal
+{
+    
+}
