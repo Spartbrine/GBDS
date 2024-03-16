@@ -1,9 +1,13 @@
 namespace Menu;
 using Datos;
+using System.Data.SQLite;
+
 class Operaciones
 {
     MetodosOpc metodos = new MetodosOpc();
+    Consulta con = new Consulta();
     int opcion;
+    
     public void Metodo()
     {
         do{
@@ -34,6 +38,10 @@ class Operaciones
                     case 6:
                         metodos.ContadorDonantes();
                     break;
+                    case 4004: //Esto es para que se hagan pruebas
+                        con.Prueba();
+                    break;
+                        
                 }
                 break;
             }

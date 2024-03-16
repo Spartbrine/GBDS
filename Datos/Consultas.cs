@@ -11,11 +11,37 @@ class Consulta : DatosCli
     public override string TipoSangre { get => base.TipoSangre; set => base.TipoSangre = value; }
     public override int Telefono { get => base.Telefono; set => base.Telefono = value; }
     public override string Desc { get => base.Desc; set => base.Desc = value; }
-    string connectionString = @"Data Source=../;Version=3;";
+    string connectionString = @"Data Source=../BancoSangre;Version=3;";
     
     public void Registro()
     {
+        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
+        {
+            conexion.Open();
+        }
+    }
+    
+    public void Prueba()
+    {
+        string query = "SELECT * FROM Datos_usuario";
 
+        string connectionString = @"Data Source=BancoSangre.sqlite;Version=3;";
+
+        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
+        {
+            conexion.Open();
+            using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
+            {
+                   using(SQLiteDataReader reader = comando.ExecuteReader())
+                    {
+                        while(reader.Read())
+                        {
+                            Console.WriteLine($"ID: {reader["ID"]}, Nombre: {reader["Nombre"]}, Apellido: {reader["Apellido_paterno"]}");                  
+                        }
+                    }
+            
+            }
+        }
     }
 
 }

@@ -1,16 +1,15 @@
 namespace Datos;
+
 class MetodosOpc
 {
     Consulta cons = new Consulta();
-    string? nombre="", apellido1="", apellido2="";
+    string? tipoSangre, factorRH;
+
     public void RegistrarUsuario()
     {
-        Console.WriteLine("Mencione el nombre del usuario a registrar. (En caso de tener más de dos, mencionar solo el primero) ");
-            nombre = Console.ReadLine();
-        Console.WriteLine("Mencione el apellido paterno del usuario");
-            apellido1 = Console.ReadLine();
-        Console.WriteLine("Mencione el apellido materno del usuario");
-            apellido2 = Console.ReadLine();
+        string? nombre="", apellido1="", apellido2="";
+        DatosBasicos(out nombre, out apellido1, out apellido2);
+
 
         if(/*Condicion de que el registro haya sido exitoso o no*/ nombre == "pedro")
         {
@@ -23,11 +22,9 @@ class MetodosOpc
 
     public void RecuperarDatos()
     {
-        Console.WriteLine("Mencione el nombre del usuario a recuperar");
-            nombre = Console.ReadLine();
-        Console.WriteLine("Mencione el apellido paterno");
+        string? nombre="", apellido1="", apellido2="";
+        DatosBasicos(out nombre, out apellido1, out apellido2);
 
-        Console.WriteLine("Mencione el apellido materno");
 
         if(/* Si la consulta encontro al usuario imprimir todos los datos*/nombre == "Pedro")
         {
@@ -37,34 +34,32 @@ class MetodosOpc
         {
             Console.WriteLine("Ocurrió un error al buscar el usuario. \nInténtelo de nuevo.");
         }
-    
-
     }
 
     public void MatchSangre() //En caso de buscar compatibilidad
     {
         Console.Write("Tipo de sangre solicitante:");
-
+            tipoSangre = Console.ReadLine();
         Console.WriteLine("Factor RH del solicitante:");
-
+            factorRH= Console.ReadLine();
         /*A la hora de la busqueda agregar en el query una sentencia and Estatus = Disponible; para que no muestre a los no disponibles*/
         Console.WriteLine("Buscando...");
+
     }
 
     public void BajaUsuario()
     {
-        Console.WriteLine("Nombre del usuario a dar de baja:");
-        
-        Console.WriteLine("Apellido paterno del usuario a dar de baja:");
+        string? nombre="", apellido1="", apellido2="";
+        DatosBasicos(out nombre, out apellido1, out apellido2);
 
-        Console.WriteLine("Apellido materno del usuario a dar de baja:");
 
     }
     //En modificaciones al usuario se puede modificar apellidos, nombres, etc? Sí
     // O unicamente debo poder modificar el estatus? no
     public void ModificarUsuario()
     {
-        Console.WriteLine("Nombre del usuario a modificar:");
+        string? nombre="", apellido1="", apellido2="";
+        DatosBasicos(out nombre, out apellido1, out apellido2);
 
         Console.WriteLine("¿Qué apartado desea modificar del usuario?");
 
@@ -81,5 +76,16 @@ class MetodosOpc
     public void ContadorDonantes()
     {
 
+    }
+
+    public void DatosBasicos(out string? nombre, out string? apellido1, out string? apellido2)
+    {
+
+        Console.WriteLine("Mencione el nombre del usuario");
+            nombre = Console.ReadLine();
+        Console.WriteLine("Mencione el apellido paterno del usuario");
+            apellido1 = Console.ReadLine();
+        Console.WriteLine("Mencione el apellido materno del usuario");
+            apellido2 = Console.ReadLine();
     }
 }
