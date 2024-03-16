@@ -41,6 +41,10 @@
             "MySql.Data": {
               "target": "Package",
               "version": "[8.3.0, )"
+            },
+            "System.Data.SQLite": {
+              "target": "Package",
+              "version": "[1.0.118, )"
             }
           },
           "imports": [

@@ -1,8 +1,12 @@
 namespace Datos;
 abstract class DatosCli
 {
-    protected string factorRH, nombre, apellido1, apellido2, direccion, estatus, grupoSanguineo;
+    protected string factorRH, nombre, apellido1, apellido2, direccion, estatus, grupoSanguineo, descripcion;
     protected int telefono;
+    public virtual string Desc
+    {
+        get{return descripcion;} set{descripcion=value;}
+    }
     public virtual string TipoSangre
     {
         get{return grupoSanguineo;} set{grupoSanguineo=value;}
