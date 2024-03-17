@@ -4,19 +4,18 @@ using System.Text.RegularExpressions;
 class MetodosOpc
 {
     Consulta cons = new Consulta();
-    string? tipoSangre, factorRH;
+    
 
     //COMPLETO
     public void RegistrarUsuario() 
     {
-        string? nombre="", apellido1="", apellido2="", telefono="", direccion="", tipoS, factor, estatus, observaciones;
-        DatosBasicos(out nombre, out apellido1, out apellido2);
-        DatosRestantes(out telefono, out direccion);
-        DatosSangre(out tipoS, out factor, out estatus, out observaciones);
+        DatosBasicos();
+        DatosRestantes();
+        DatosSangre();
         string id = "";
         try
         {
-            id = cons.Registro(nombre, apellido1, apellido2, direccion, telefono, factor, tipoS, estatus, observaciones);
+            id = cons.Registro();
             Console.WriteLine("El registro a sido completado");
             cons.RegistroSoli(id);
         }
@@ -29,27 +28,39 @@ class MetodosOpc
    //COMPLETO
     public void RecuperarDatos() //Este con un select de la tabla Tipo_sangre y Datos_usuario con join
     {
-        string? nombre="", apellido1="", apellido2="", id="";
-        DatosBasicos(out nombre, out apellido1, out apellido2);
-        id = cons.BuscarDatos(nombre, apellido1, apellido2);
+        string? id="";
+        DatosBasicos();
+        id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
         cons.RegistroSoli(id);
 
     }
     public void MatchSangre() //En caso de buscar compatibilidad
     {
+        string query ="";
         Console.Write("Tipo de sangre solicitante:");
-            tipoSangre = Console.ReadLine().ToLower();
+            cons.TipoSangre = Console.ReadLine().ToLower();
         Console.WriteLine("Factor RH del solicitante:");
-            factorRH= Console.ReadLine().ToLower();
+            cons.FactorRH = Console.ReadLine().ToLower();
         /*A la hora de la busqueda agregar en el query una sentencia and Estatus = Disponible; para que no muestre a los no disponibles*/
         Console.WriteLine("Buscando...");
-        switch(tipoSangre)
+        switch(cons.TipoSangre)
         {
             case "ab":
-                switch(factorRH)
+                switch(cons.FactorRH)
                 {
                     case "positivo":
-                        cons.MatchSangreABPositivo();
+                    query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                    FROM Datos_usuario du
+                    JOIN Tipo_sangre ts 
+                    WHERE ts.estatus = 'Disponible' OR ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB' OR ts.tipo_sangre = 'B'";
+                        cons.MatchSangre(query);
+                    break;
+                    case "negativo":
+                        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                    FROM Datos_usuario du
+                    JOIN Tipo_sangre ts 
+                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
+                        cons.MatchSangre(query);
                     break;
                 }
             break;
@@ -58,43 +69,38 @@ class MetodosOpc
     }
     public void BajaUsuario() //Este metodo debe actualizar el estatus y agregar observaciones
     {
-        string? nombre="", apellido1="", apellido2="";
-        DatosBasicos(out nombre, out apellido1, out apellido2);
-        Console.WriteLine(nombre + apellido1 + apellido2);  
+        DatosBasicos();
+        Console.WriteLine(cons.Name, cons.ApellidoPat, cons.ApellidoMat);  
     }
     //En modificaciones al usuario se puede modificar apellidos, nombres, etc? Sí
     // O unicamente debo poder modificar el estatus? no
     public void ModificarUsuario() //Utilizar update
     {
-        string? nombre="", apellido1="", apellido2="";
-        DatosBasicos(out nombre, out apellido1, out apellido2);
-
-        Console.WriteLine("¿Qué apartado desea modificar del usuario?");
-
-        if(/* Caso de que la modificación haya sido correcta*/ nombre == "Pedro")
+        string id = "";
+        DatosBasicos();
+        id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
+        if(id!="")
         {
-
-        }
-        else
-        {
-
-        }
+            Console.WriteLine(id);
+            Console.WriteLine("¿Qué apartado desea modificar del usuario?");
+        }        
     }
     public void ContadorDonantes() //Usar un count de donantes donde estatus sea disponible 
     {
 
     }
-    public void DatosBasicos(out string? nombre, out string? apellido1, out string? apellido2)
+
+    public void DatosBasicos()
     { //Necesito un regex para que no se puedan ingresar numeros en los nombres, y apellidos
 
         Console.WriteLine("Mencione el nombre del usuario");
-            nombre = Console.ReadLine();
+            cons.Name = Console.ReadLine();
         Console.WriteLine("Mencione el apellido paterno del usuario");
-            apellido1 = Console.ReadLine();
+            cons.ApellidoPat = Console.ReadLine();
         Console.WriteLine("Mencione el apellido materno del usuario");
-            apellido2 = Console.ReadLine();
+            cons.ApellidoMat = Console.ReadLine();
     }
-    public void DatosSangre(out string tipoS, out string factor, out string estatus, out string observaciones) //id (ya debe estar registrado), factor rh, tipo de sangre, estatus y observaciones
+    public void DatosSangre() //id (ya debe estar registrado), factor rh, tipo de sangre, estatus y observaciones
     {
         Regex tipoSangre = new Regex(@"^(A|B|O|AB|)$", RegexOptions.IgnoreCase);
         Regex factorRH = new Regex(@"^(positivo|negativo)$", RegexOptions.IgnoreCase); 
@@ -103,77 +109,77 @@ class MetodosOpc
         do //Tipo de sangre
         {
             Console.WriteLine("Tipo de sangre del usuario");
-                tipoS = Console.ReadLine();
+                cons.TipoSangre = Console.ReadLine();
 
-            if (!tipoSangre.IsMatch(tipoS))
+            if (!tipoSangre.IsMatch(cons.TipoSangre))
             {
                 Console.WriteLine("Por favor, ingrese un tipo de sangre válido.");
             }
         }
-        while (!tipoSangre.IsMatch(tipoS));
+        while (!tipoSangre.IsMatch(cons.TipoSangre));
 
         do //Factor rh
         {
             Console.Write("Ingrese el factor Rh (positivo o negativo): ");
-                factor = Console.ReadLine();
+                cons.FactorRH = Console.ReadLine();
 
-            if (!factorRH.IsMatch(factor))
+            if (!factorRH.IsMatch(cons.FactorRH))
             {
                 Console.WriteLine("Por favor, ingrese un factor Rh válido.");
             }
         }
-        while (!factorRH.IsMatch(factor));
+        while (!factorRH.IsMatch(cons.FactorRH));
 
         do //Estatus
         {
             Console.Write("Ingrese el estatus (Disponible, Baja definitiva o Baja temporal): ");
-            estatus = Console.ReadLine();
+            cons.Estatus = Console.ReadLine();
 
-            if (!estatusRgx.IsMatch(estatus))
+            if (!estatusRgx.IsMatch(cons.Estatus))
             {
                 Console.WriteLine("Por favor, ingrese un estatus válido.");
             }
         }
-        while (!estatusRgx.IsMatch(estatus));
+        while (!estatusRgx.IsMatch(cons.Estatus));
 
-        if (estatus.ToLower().Equals("baja definitiva") || estatus.ToLower().Equals("baja temporal"))
+        if (cons.Estatus.ToLower().Equals("baja definitiva") || cons.Estatus.ToLower().Equals("baja temporal"))
         {
             do
             {
                 Console.Write("Ingrese la observación: ");
-                    observaciones = Console.ReadLine();
-                if(observaciones=="")
+                    cons.Desc = Console.ReadLine();
+                if(cons.Desc=="")
                 {
                     Console.WriteLine("Necesita poner observaciones");
                 }
-            }while(observaciones=="");
+            }while(cons.Desc=="");
         }
         else
         {
-            observaciones = "Saludable";
+            cons.Desc = "Saludable";
         }
     
 
 
     }
-    public void DatosRestantes(out string telefono, out string direccion)
+    public void DatosRestantes()
     {
         Regex numeros = new Regex(@"^\d+$");
         
         do
         {
             Console.WriteLine("Teléfono del usuario:");
-                telefono = Console.ReadLine();
+                cons.Telefono = Console.ReadLine();
 
-            if (!numeros.IsMatch(telefono))
+            if (!numeros.IsMatch(cons.Telefono))
             {
                 Console.WriteLine("Por favor, ingrese solo números.");
             }
         }
-        while (!numeros.IsMatch(telefono));
+        while (!numeros.IsMatch(cons.Telefono));
 
         Console.WriteLine("Dirección del usuaio:");
-            direccion = Console.ReadLine();
+            cons.Direccion = Console.ReadLine();
     }
 
 }

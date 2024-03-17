@@ -9,11 +9,11 @@ class Consulta : DatosCli
     public override string Direccion { get => base.Direccion; set => base.Direccion = value; }
     public override string FactorRH { get => base.FactorRH; set => base.FactorRH = value; }
     public override string TipoSangre { get => base.TipoSangre; set => base.TipoSangre = value; }
-    public override int Telefono { get => base.Telefono; set => base.Telefono = value; }
+    public override string Telefono { get => base.Telefono; set => base.Telefono = value; }
     public override string Desc { get => base.Desc; set => base.Desc = value; }
     string connectionString = @"Data Source=BancoSangre.sqlite;Version=3;";
     string query = "", query2 = "", query3="";
-    public string Registro(string nombre, string apellido1, string apellido2, string direccion, string telefono, string factor, string tipoS, string estatus, string obser) //El registro necesita comprobar que los nombres y apellidos no estan registrados 
+    public string Registro() //El registro necesita comprobar que los nombres y apellidos no estan registrados 
     {
         int id =ContadorIDS();
         query = "INSERT INTO Datos_usuario (ID,Nombre, Apellido_paterno, Apellido_materno, Telefono, Direccion) VALUES (@id, @nombre, @apellido1, @apellido2, @telefono, @direccion)";
@@ -23,11 +23,11 @@ class Consulta : DatosCli
             using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
             {
                 comando.Parameters.AddWithValue("@id", id); //El id se debe de obtener contando el total de registros +1 y ese va ser el nuevo id
-                comando.Parameters.AddWithValue("@nombre", nombre.ToUpper());
-                comando.Parameters.AddWithValue("@apellido1", apellido1.ToUpper());
-                comando.Parameters.AddWithValue("@apellido2", apellido2.ToUpper());
-                comando.Parameters.AddWithValue("@telefono", telefono.ToUpper());
-                comando.Parameters.AddWithValue("@direccion", direccion.ToUpper());
+                comando.Parameters.AddWithValue("@nombre", Name.ToUpper());
+                comando.Parameters.AddWithValue("@apellido1", ApellidoPat.ToUpper());
+                comando.Parameters.AddWithValue("@apellido2", ApellidoMat.ToUpper());
+                comando.Parameters.AddWithValue("@telefono", Telefono.ToUpper());
+                comando.Parameters.AddWithValue("@direccion", Direccion.ToUpper());
                     int filasInsertadas = comando.ExecuteNonQuery();
                 Console.WriteLine($"Se inserto {filasInsertadas} la fila en la tabla.");
                 Console.WriteLine($"El ID de su usuario es: {id}");
@@ -35,11 +35,11 @@ class Consulta : DatosCli
             }
         }
 
-        RegistroSangre(id, factor, tipoS, estatus, obser);
+        RegistroSangre(id);
 
         return Convert.ToString(id);
     }
-    public void RegistroSangre(int id, string factor, string tipoS, string estatus, string obser)
+    public void RegistroSangre(int id)
     {
         query = "INSERT INTO Tipo_sangre (id, factor_rh, tipo_sangre, estatus, Observaciones) VALUES (@id, @factor, @tipoS, @estatus, @obser)";
         using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
@@ -48,10 +48,10 @@ class Consulta : DatosCli
             using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
             {
                 comando.Parameters.AddWithValue("@id", id); //El id se debe de obtener contando el total de registros +1 y ese va ser el nuevo id
-                comando.Parameters.AddWithValue("@factor", factor.ToUpper());
-                comando.Parameters.AddWithValue("@tipoS", tipoS.ToUpper());
-                comando.Parameters.AddWithValue("@estatus", estatus.ToUpper());
-                comando.Parameters.AddWithValue("@obser", obser.ToUpper());
+                comando.Parameters.AddWithValue("@factor", FactorRH.ToUpper());
+                comando.Parameters.AddWithValue("@tipoS", TipoSangre.ToUpper());
+                comando.Parameters.AddWithValue("@estatus", Estatus.ToUpper());
+                comando.Parameters.AddWithValue("@obser", Desc.ToUpper());
                     int filasInsertadas = comando.ExecuteNonQuery();
                 Console.WriteLine($"Se inserto {filasInsertadas} la fila en la tabla.");
 
@@ -139,13 +139,10 @@ class Consulta : DatosCli
         return id;
     }
     //COMPLETO
-    public void MatchSangreABPositivo()
+    public void MatchSangre(string query)
     {
         bool donadoresEncontrados = false;
-        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' OR ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB' OR ts.tipo_sangre = 'B'";
+        
         using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
         {
             conexion.Open();
@@ -153,6 +150,7 @@ class Consulta : DatosCli
             {
                 using (SQLiteDataReader reader = comando.ExecuteReader())
                 {
+                    Console.WriteLine($"{"Nombre(s)", -25}|{"Apellido paterno", -15 }|{"Apellido materno", -15}|{"Factor RH", -10}|{"TS", -2}|{"Télefono", -10}|{"Dirección", -30}");
                     while(reader.Read())
                     {
                         if (!donadoresEncontrados)
@@ -160,256 +158,13 @@ class Consulta : DatosCli
                             Console.WriteLine("\nDonador(es) encontrado(s):");
                             donadoresEncontrados = true;
                         }
-                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
-                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
-                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
-                        Console.WriteLine($"Factor RH: {reader["Factor_rh"]}");
-                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
-                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
-                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
+                        Console.WriteLine($"{reader["Nombre"].ToString().PadRight(25)}|{reader["Apellido_paterno"].ToString().PadRight(15)}|{reader["Apellido_materno"].ToString().PadRight(15)}|{reader["Factor_rh"].ToString().PadRight(10)}|{reader["Tipo_sangre"].ToString().PadRight(2)}|{reader["Telefono"].ToString().PadRight(10)}|{reader["Direccion"].ToString().PadRight(30)}");
                     }
                 }
             }
         }
     }
-    //COMPLETO
-    public void MatchSangreABNegativo()
-    {
-        bool donadoresEncontrados = false;
-        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
-        {
-            conexion.Open();
-            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
-            {
-                using (SQLiteDataReader reader = comando.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        if (!donadoresEncontrados)
-                        {
-                            Console.WriteLine("\nDonador(es) encontrado(s):");
-                            donadoresEncontrados = true;
-                        }
-                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
-                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
-                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
-                        Console.WriteLine($"Factor RH: {reader["Factor_rh"]}");
-                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
-                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
-                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
-                    }
-                }
-            }
-        }
-    }
-    //INCOMPLETO
-    public void MatchSangreAPositivo()
-    {
-        bool donadoresEncontrados = false;
-        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
-        {
-            conexion.Open();
-            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
-            {
-                using (SQLiteDataReader reader = comando.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        if (!donadoresEncontrados)
-                        {
-                            Console.WriteLine("\nDonador(es) encontrado(s):");
-                            donadoresEncontrados = true;
-                        }
-                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
-                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
-                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
-                        Console.WriteLine($"Factor RH: {reader["Factor_rh"]}");
-                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
-                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
-                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
-                    }
-                }
-            }
-        }
-    }
-    //INCOMPLETO
-    public void MatchSangreANegativo()
-    {
-        bool donadoresEncontrados = false;
-        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
-        {
-            conexion.Open();
-            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
-            {
-                using (SQLiteDataReader reader = comando.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        if (!donadoresEncontrados)
-                        {
-                            Console.WriteLine("\nDonador(es) encontrado(s):");
-                            donadoresEncontrados = true;
-                        }
-                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
-                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
-                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
-                        Console.WriteLine($"Factor RH: {reader["Factor_rh"]}");
-                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
-                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
-                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
-                    }
-                }
-            }
-        }
-    }
-    //INCOMPLETO
-    public void MatchSangreBPositivo()
-    {
-        bool donadoresEncontrados = false;
-        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
-        {
-            conexion.Open();
-            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
-            {
-                using (SQLiteDataReader reader = comando.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        if (!donadoresEncontrados)
-                        {
-                            Console.WriteLine("\nDonador(es) encontrado(s):");
-                            donadoresEncontrados = true;
-                        }
-                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
-                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
-                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
-                        Console.WriteLine($"Factor RH: {reader["Factor_rh"]}");
-                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
-                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
-                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
-                    }
-                }
-            }
-        }
-    }
-    //INCOMPLETO
-    public void MatchSangreBNegativo()
-    {
-        bool donadoresEncontrados = false;
-        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
-        {
-            conexion.Open();
-            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
-            {
-                using (SQLiteDataReader reader = comando.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        if (!donadoresEncontrados)
-                        {
-                            Console.WriteLine("\nDonador(es) encontrado(s):");
-                            donadoresEncontrados = true;
-                        }
-                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
-                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
-                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
-                        Console.WriteLine($"Factor RH: {reader["Factor_rh"]}");
-                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
-                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
-                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
-                    }
-                }
-            }
-        }
-    }
-    //INCOMPLETO
-    public void MatchSangreONegativo()
-    {
-        bool donadoresEncontrados = false;
-        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
-        {
-            conexion.Open();
-            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
-            {
-                using (SQLiteDataReader reader = comando.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        if (!donadoresEncontrados)
-                        {
-                            Console.WriteLine("\nDonador(es) encontrado(s):");
-                            donadoresEncontrados = true;
-                        }
-                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
-                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
-                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
-                        Console.WriteLine($"Factor RH: {reader["Factor_rh"]}");
-                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
-                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
-                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
-                    }
-                }
-            }
-        }
-    }
-    //INCOMPLETO
-    public void MatchSangreOPositivo()
-    {
-        bool donadoresEncontrados = false;
-        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
-        {
-            conexion.Open();
-            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
-            {
-                using (SQLiteDataReader reader = comando.ExecuteReader())
-                {
-                    while(reader.Read())
-                    {
-                        if (!donadoresEncontrados)
-                        {
-                            Console.WriteLine("\nDonador(es) encontrado(s):");
-                            donadoresEncontrados = true;
-                        }
-                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
-                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
-                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
-                        Console.WriteLine($"Factor RH: {reader["Factor_rh"]}");
-                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
-                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
-                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
-                    }
-                }
-            }
-        }
-    }
+    
     public int ContadorIDS()
     {
         int id = 0;

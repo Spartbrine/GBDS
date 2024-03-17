@@ -2,7 +2,7 @@ namespace Datos;
 abstract class DatosCli
 {
     protected string factorRH, nombre, apellido1, apellido2, direccion, estatus, grupoSanguineo, descripcion;
-    protected int telefono;
+    protected string telefono;
     public virtual string Desc
     {
         get{return descripcion;} set{descripcion=value;}
@@ -26,7 +26,7 @@ abstract class DatosCli
     }
     public virtual string ApellidoPat
     {
-        get{return apellido1;} set{apellido2=value;}
+        get{return apellido1;} set{apellido1=value;}
     }
     public virtual string ApellidoMat
     {
@@ -36,7 +36,7 @@ abstract class DatosCli
     {
         get{return estatus;} set{estatus=value;}
     }
-    public virtual int Telefono
+    public virtual string Telefono
     {
         get{return telefono;} set{telefono=value;}
     }
