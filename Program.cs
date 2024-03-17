@@ -8,7 +8,7 @@ class Program
     static void Main(string[] args)
     {
          Operaciones opc = new Operaciones();
-        opc.Metodo();
+                 opc.Metodo();
         
      
 

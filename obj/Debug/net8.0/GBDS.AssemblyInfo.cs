@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GBDS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+014aea194b7dbeaf37800a682d97fca4b34f1e3b")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5e0c085d8c64ec466c4a17e32a1c8cd00ef938fd")]
 [assembly: System.Reflection.AssemblyProductAttribute("GBDS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GBDS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

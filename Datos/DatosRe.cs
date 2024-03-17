@@ -36,16 +36,6 @@ class MetodosOpc
         }
     }
 
-    public void MatchSangre() //En caso de buscar compatibilidad
-    {
-        Console.Write("Tipo de sangre solicitante:");
-            tipoSangre = Console.ReadLine();
-        Console.WriteLine("Factor RH del solicitante:");
-            factorRH= Console.ReadLine();
-        /*A la hora de la busqueda agregar en el query una sentencia and Estatus = Disponible; para que no muestre a los no disponibles*/
-        Console.WriteLine("Buscando...");
-
-    }
 
     public void BajaUsuario()
     {
@@ -73,10 +63,7 @@ class MetodosOpc
         }
     }
 
-    public void ContadorDonantes()
-    {
-
-    }
+   
 
     public void DatosBasicos(out string? nombre, out string? apellido1, out string? apellido2)
     {
