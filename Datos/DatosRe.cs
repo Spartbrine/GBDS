@@ -64,6 +64,7 @@ class MetodosOpc
                     break;
                 }
             break;
+
         }
 
     }
@@ -184,15 +185,3 @@ class MetodosOpc
 
 }
 
-
-// string insertQuery2 = "INSERT INTO Solicitudes (id_solicitante, fecha) VALUES (@IdSolicitante, @Fecha)";
-        
-//         using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
-//         {
-//             conexion.Open();
-
-//             using (SQLiteCommand comando = new SQLiteCommand(insertQuery2, conexion))
-//             {
-//                 // Parámetros para la consulta de inserción
-//                 comando.Parameters.AddWithValue("@IdSolicitante", 1); // Ejemplo de ID de solicitante
-//                 comando.Parameters.AddWithValue("@Fecha", DateTime.Now);
