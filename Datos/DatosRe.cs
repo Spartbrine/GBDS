@@ -43,30 +43,47 @@ class MetodosOpc
             cons.FactorRH = Console.ReadLine().ToLower();
         /*A la hora de la busqueda agregar en el query una sentencia and Estatus = Disponible; para que no muestre a los no disponibles*/
         Console.WriteLine("Buscando...");
-        switch(cons.TipoSangre)
+       
+        if(cons.TipoSangre == "ab" && cons.FactorRH =="positivo")
         {
-            case "ab":
-                switch(cons.FactorRH)
-                {
-                    case "positivo":
-                    query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+            query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                     FROM Datos_usuario du
                     JOIN Tipo_sangre ts 
                     WHERE ts.estatus = 'Disponible' OR ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB' OR ts.tipo_sangre = 'B'";
-                        cons.MatchSangre(query);
-                    break;
-                    case "negativo":
-                        query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+            cons.MatchSangre(query);
+        }
+        else if(cons.TipoSangre == "ab" && cons.FactorRH =="negativo")
+        {
+            query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                     FROM Datos_usuario du
                     JOIN Tipo_sangre ts 
                     WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-                        cons.MatchSangre(query);
-                    break;
-                }
-            break;
+            cons.MatchSangre(query);
+        }
+        else if(cons.TipoSangre == "a" && cons.FactorRH =="positivo")
+        {
 
         }
+        else if(cons.TipoSangre == "a" && cons.FactorRH =="negativo")
+        {
 
+        }
+        else if(cons.TipoSangre == "b" && cons.FactorRH =="positivo")
+        {
+
+        }
+        else if(cons.TipoSangre == "b" && cons.FactorRH =="negativo")
+        {
+
+        }
+        else if(cons.TipoSangre == "o" && cons.FactorRH =="negativo")
+        {
+
+        }
+        else if(cons.TipoSangre == "o" && cons.FactorRH =="positivo")
+        {
+
+        }
     }
     public void BajaUsuario() //Este metodo debe actualizar el estatus y agregar observaciones
     {
