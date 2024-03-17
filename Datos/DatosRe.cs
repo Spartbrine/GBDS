@@ -6,7 +6,7 @@ class MetodosOpc
     Consulta cons = new Consulta();
     string? tipoSangre, factorRH;
 
-    public void RegistrarUsuario()
+    public void RegistrarUsuario() //COMPLETO
     {
         string? nombre="", apellido1="", apellido2="", telefono="", direccion="", tipoS, factor, estatus, observaciones;
         DatosBasicos(out nombre, out apellido1, out apellido2);
@@ -25,22 +25,14 @@ class MetodosOpc
         }
         return;
     }
-
-
     public void RecuperarDatos() //Este con un select de la tabla Tipo_sangre y Datos_usuario con join
     {
-        string? nombre="", apellido1="", apellido2="";
+        string? nombre="", apellido1="", apellido2="", id="";
         DatosBasicos(out nombre, out apellido1, out apellido2);
-        if(/* Si la consulta encontro al usuario imprimir todos los datos*/nombre == "Pedro")
-        {
+        id = cons.BuscarDatos(nombre, apellido1, apellido2);
+        cons.RegistroSoli(id);
 
-        }
-        else //Caso de que algún dato este mal o haya habido erorres.
-        {
-            Console.WriteLine("Ocurrió un error al buscar el usuario. \nInténtelo de nuevo.");
-        }
     }
-
     public void MatchSangre() //En caso de buscar compatibilidad
     {
         Console.Write("Tipo de sangre solicitante:");
@@ -51,7 +43,6 @@ class MetodosOpc
         Console.WriteLine("Buscando...");
 
     }
-
     public void BajaUsuario() //Este metodo debe actualizar el estatus y agregar observaciones
     {
         string? nombre="", apellido1="", apellido2="";
@@ -76,12 +67,10 @@ class MetodosOpc
 
         }
     }
-
     public void ContadorDonantes() //Usar un count de donantes donde estatus sea disponible 
     {
 
     }
-
     public void DatosBasicos(out string? nombre, out string? apellido1, out string? apellido2)
     { //Necesito un regex para que no se puedan ingresar numeros en los nombres, y apellidos
 
@@ -92,7 +81,6 @@ class MetodosOpc
         Console.WriteLine("Mencione el apellido materno del usuario");
             apellido2 = Console.ReadLine();
     }
-
     public void DatosSangre(out string tipoS, out string factor, out string estatus, out string observaciones) //id (ya debe estar registrado), factor rh, tipo de sangre, estatus y observaciones
     {
         Regex tipoSangre = new Regex(@"^(A|B|O|AB|)$", RegexOptions.IgnoreCase);
@@ -155,7 +143,6 @@ class MetodosOpc
 
 
     }
-
     public void DatosRestantes(out string telefono, out string direccion)
     {
         Regex numeros = new Regex(@"^\d+$");

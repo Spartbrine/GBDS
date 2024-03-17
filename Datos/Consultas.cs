@@ -172,4 +172,49 @@ class Consulta : DatosCli
             }
         }
     }
+
+    public string BuscarDatos(string nombreUsuario, string apellidoPaterno, string apellidoMaterno)
+    {
+        string id = "";
+        query = @"
+            SELECT du.ID, du.Nombre, du.Apellido_paterno, du.Apellido_materno, ts.factor_rh, ts.tipo_sangre, ts.estatus, ts.Observaciones
+            FROM Datos_usuario du
+            JOIN Tipo_sangre ts ON du.ID = ts.id
+            WHERE du.Nombre = @NombreUsuario AND du.Apellido_paterno = @ApellidoPaterno AND du.Apellido_materno = @ApellidoMaterno"; 
+
+        using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+        {
+            conexion.Open();
+
+            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
+            {
+                comando.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
+                comando.Parameters.AddWithValue("@ApellidoPaterno", apellidoPaterno);
+                comando.Parameters.AddWithValue("@ApellidoMaterno", apellidoMaterno); // Agrega el parámetro para el apellido materno
+
+                using (SQLiteDataReader reader = comando.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Console.WriteLine("Datos del usuario encontrado:");
+                        Console.WriteLine($"ID: {reader["ID"]}");
+                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
+                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
+                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
+                        Console.WriteLine($"Factor RH: {reader["Factor_RH"]}");
+                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
+                        Console.WriteLine($"Estatus: {reader["Estatus"]}");
+                        Console.WriteLine($"Observaciones: {reader["Observaciones"]}");
+                        id = Convert.ToString(reader["ID"]);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Usuario no encontrado.");
+                    }
+                }
+            }
+        }
+
+        return id;
+    }
 }
