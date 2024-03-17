@@ -177,7 +177,7 @@ class Consulta : DatosCli
     {
         string id = "";
         query = @"
-            SELECT du.ID, du.Nombre, du.Apellido_paterno, du.Apellido_materno, ts.factor_rh, ts.tipo_sangre, ts.estatus, ts.Observaciones
+            SELECT du.ID, du.Nombre, du.Apellido_paterno, du.Apellido_materno, ts.factor_rh, ts.tipo_sangre, ts.estatus, ts.Observaciones, du.Telefono, du.Direccion
             FROM Datos_usuario du
             JOIN Tipo_sangre ts ON du.ID = ts.id
             WHERE du.Nombre = @NombreUsuario AND du.Apellido_paterno = @ApellidoPaterno AND du.Apellido_materno = @ApellidoMaterno"; 
@@ -205,6 +205,9 @@ class Consulta : DatosCli
                         Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
                         Console.WriteLine($"Estatus: {reader["Estatus"]}");
                         Console.WriteLine($"Observaciones: {reader["Observaciones"]}");
+                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
+                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
+
                         id = Convert.ToString(reader["ID"]);
                     }
                     else
