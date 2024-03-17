@@ -6,7 +6,8 @@ class MetodosOpc
     Consulta cons = new Consulta();
     string? tipoSangre, factorRH;
 
-    public void RegistrarUsuario() //COMPLETO
+    //COMPLETO
+    public void RegistrarUsuario() 
     {
         string? nombre="", apellido1="", apellido2="", telefono="", direccion="", tipoS, factor, estatus, observaciones;
         DatosBasicos(out nombre, out apellido1, out apellido2);
@@ -25,6 +26,7 @@ class MetodosOpc
         }
         return;
     }
+   //COMPLETO
     public void RecuperarDatos() //Este con un select de la tabla Tipo_sangre y Datos_usuario con join
     {
         string? nombre="", apellido1="", apellido2="", id="";
