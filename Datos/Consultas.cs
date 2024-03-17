@@ -13,21 +13,48 @@ class Consulta : DatosCli
     public override string Desc { get => base.Desc; set => base.Desc = value; }
     string connectionString = @"Data Source=BancoSangre.sqlite;Version=3;";
     string query = "", query2 = "", query3="";
-    public void Registro(string nombre, string apellido1, string apellido2) //El registro necesita comprobar que los nombres y apellidos no estan registrados 
+    public string Registro(string nombre, string apellido1, string apellido2, string direccion, string telefono, string factor, string tipoS, string estatus, string obser) //El registro necesita comprobar que los nombres y apellidos no estan registrados 
     {
         int id =ContadorIDS();
-        query = "INSERT INTO Datos_usuario (ID,Nombre, Apellido_paterno, Apellido_materno) VALUES (@id, @nombre, @apellido1, @apellido2)";
+        query = "INSERT INTO Datos_usuario (ID,Nombre, Apellido_paterno, Apellido_materno, Telefono, Direccion) VALUES (@id, @nombre, @apellido1, @apellido2, @telefono, @direccion)";
         using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
         {
             conexion.Open();
             using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
             {
                 comando.Parameters.AddWithValue("@id", id); //El id se debe de obtener contando el total de registros +1 y ese va ser el nuevo id
-                comando.Parameters.AddWithValue("@nombre", nombre);
-                comando.Parameters.AddWithValue("@apellido1", apellido1);
-                comando.Parameters.AddWithValue("@apellido2", apellido2);
+                comando.Parameters.AddWithValue("@nombre", nombre.ToUpper());
+                comando.Parameters.AddWithValue("@apellido1", apellido1.ToUpper());
+                comando.Parameters.AddWithValue("@apellido2", apellido2.ToUpper());
+                comando.Parameters.AddWithValue("@telefono", telefono.ToUpper());
+                comando.Parameters.AddWithValue("@direccion", direccion.ToUpper());
                     int filasInsertadas = comando.ExecuteNonQuery();
                 Console.WriteLine($"Se inserto {filasInsertadas} la fila en la tabla.");
+                Console.WriteLine($"El ID de su usuario es: {id}");
+
+            }
+        }
+
+        RegistroSangre(id, factor, tipoS, estatus, obser);
+
+        return Convert.ToString(id);
+    }
+    public void RegistroSangre(int id, string factor, string tipoS, string estatus, string obser)
+    {
+        query = "INSERT INTO Tipo_sangre (id, factor_rh, tipo_sangre, estatus, Observaciones) VALUES (@id, @factor, @tipoS, @estatus, @obser)";
+        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
+        {
+            conexion.Open();
+            using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
+            {
+                comando.Parameters.AddWithValue("@id", id); //El id se debe de obtener contando el total de registros +1 y ese va ser el nuevo id
+                comando.Parameters.AddWithValue("@factor", factor.ToUpper());
+                comando.Parameters.AddWithValue("@tipoS", tipoS.ToUpper());
+                comando.Parameters.AddWithValue("@estatus", estatus.ToUpper());
+                comando.Parameters.AddWithValue("@obser", obser.ToUpper());
+                    int filasInsertadas = comando.ExecuteNonQuery();
+                Console.WriteLine($"Se inserto {filasInsertadas} la fila en la tabla.");
+
             }
         }
     }
@@ -44,9 +71,56 @@ class Consulta : DatosCli
                 Console.WriteLine($"El total de datos en la tabla Tipo_sangre es: {id}");
             }
         }
-        return id;
+        return id + 1;
     }
-    
+    public int ContadorSoli()
+    {
+        int totSoli = 0;
+         query = "SELECT COUNT(*) FROM Solicitudes";
+        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
+        {
+            conexion.Open();
+            using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
+            {
+                totSoli = Convert.ToInt32(comando.ExecuteScalar());
+                Console.WriteLine($"El total de datos en la tabla solicitudes es: {totSoli}");
+            }
+        }
+        return totSoli + 1;
+    }
+    public void RegistroSoli(string usuarioId)
+    {
+        int numSoli=0, filas=0;
+        string query = "INSERT INTO Solicitudes (id, id_solicitante, fecha) VALUES (@idSolicitud, @idUsuario, @fecha)";
+            numSoli = ContadorSoli();
+        // Crear y abrir la conexión
+        using (SQLiteConnection connection = new SQLiteConnection(connectionString))
+        {
+            connection.Open();
+
+            // Crear el comando SQL con parámetros
+            using (SQLiteCommand command = new SQLiteCommand(query, connection))
+            {
+                // Agregar parámetros
+                command.Parameters.AddWithValue("@idSolicitud", numSoli);
+                command.Parameters.AddWithValue("@idUsuario", usuarioId);
+                command.Parameters.AddWithValue("@fecha", DateTime.Now);
+
+                // Ejecutar la consulta
+                 filas = command.ExecuteNonQuery();
+
+                // Verificar si la inserción fue exitosa
+                if (filas > 0)
+                {
+                    Console.WriteLine("Solicitud agregada correctamente.");
+                }
+                else
+                {
+                    Console.WriteLine("No se pudo agregar la solicitud.");
+                }
+            }
+        }
+    }
     public void Prueba() //Parte para visualizar datos y pruebas 
     {
         query = "SELECT * FROM Datos_usuario";

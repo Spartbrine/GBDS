@@ -10,6 +10,7 @@ class Operaciones
     
     public void Metodo()
     {
+        bool salida = true;
         do{
             try
             {
@@ -38,18 +39,21 @@ class Operaciones
                     case 6:
                         metodos.ContadorDonantes();
                     break;
+                    case 7:
+                        salida = false;
+                    break;
                     case 4004: //Esto es para que se hagan pruebas
                         con.Prueba();
                     break;
                         
                 }
-                break;
+                
             }
             catch(FormatException)
             {
                 Console.WriteLine("Opción no válida");
             }
-        }while(true);
+        }while(salida == true);
     }
 }
 
