@@ -38,11 +38,22 @@ class MetodosOpc
     public void MatchSangre() //En caso de buscar compatibilidad
     {
         Console.Write("Tipo de sangre solicitante:");
-            tipoSangre = Console.ReadLine();
+            tipoSangre = Console.ReadLine().ToLower();
         Console.WriteLine("Factor RH del solicitante:");
-            factorRH= Console.ReadLine();
+            factorRH= Console.ReadLine().ToLower();
         /*A la hora de la busqueda agregar en el query una sentencia and Estatus = Disponible; para que no muestre a los no disponibles*/
         Console.WriteLine("Buscando...");
+        switch(tipoSangre)
+        {
+            case "ab":
+                switch(factorRH)
+                {
+                    case "positivo":
+                        cons.MatchSangreABPositivo();
+                    break;
+                }
+            break;
+        }
 
     }
     public void BajaUsuario() //Este metodo debe actualizar el estatus y agregar observaciones
