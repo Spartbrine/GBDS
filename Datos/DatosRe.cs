@@ -101,7 +101,7 @@ class MetodosOpc
         if(id!=null)
         {
             Console.WriteLine("ID del usuario:" + id);
-            
+            MenuModif(id);
                 
             
         }        
@@ -203,12 +203,92 @@ class MetodosOpc
             cons.Direccion = Console.ReadLine();
     }
 
-    public void MenuModif()
+    public void MenuModif(string id)
     {
-        string opcion="";
+        Regex numeros = new Regex(@"^\d+$");
+        Regex tipoSangre = new Regex(@"^(A|B|O|AB|)$", RegexOptions.IgnoreCase);
+        Regex factorRH = new Regex(@"^(positivo|negativo)$", RegexOptions.IgnoreCase); 
+        string opcion="", query = "", datoActualizado="";
+        
         Console.WriteLine("¿Qué apartado desea modificar del usuario?");
             Console.WriteLine("1.- Nombre \n2.- Apellido paterno \n3.- Apellido materno \n 4.-Dirección \n5.- Tipo de sangre \n6.- Factor RH \n7.- Télefono");
                 opcion = Console.ReadLine();
+//string query = "UPDATE NombreTabla SET NombreColumna = @NuevoValor WHERE Condicion = @Condicion";   
+        switch(opcion)
+        {
+            case "1": //Nombre
+                Console.WriteLine("Nombre por el que desea modificar:");
+                    datoActualizado = Console.ReadLine();
+                cons.ActualizarDato("Datos_usuario","Nombre",id,datoActualizado);    
+            break;
+            
+            case "2": //Apellido paterno
+                Console.WriteLine("Apellido paterno por el que desea modificar:");
+                    datoActualizado = Console.ReadLine();
+                cons.ActualizarDato("Datos_usuario","Apellido_paterno",id,datoActualizado);  
+            break;
+
+            case "3": //Apellido materno
+                Console.WriteLine("Apellido materno por el que desea modificar:");
+                    datoActualizado = Console.ReadLine();
+                cons.ActualizarDato("Datos_usuario","Apellido_materno",id,datoActualizado); 
+            break;
+
+            case "4": //Direccion
+                Console.WriteLine("Dirección por la que desea modificar:");
+                    datoActualizado = Console.ReadLine();
+                cons.ActualizarDato("Datos_usuario","Direccion",id,datoActualizado); 
+            break;
+
+            case "5":   //Tipo de sangre
+                    do 
+                    {
+                        Console.WriteLine("Tipo de sangre por la que desea modificar:");
+                            datoActualizado = Console.ReadLine();
+
+                        if (!tipoSangre.IsMatch(datoActualizado))
+                        {
+                            Console.WriteLine("Por favor, ingrese un tipo de sangre válido.");
+                        }
+                    }
+                    while (!tipoSangre.IsMatch(datoActualizado));
+                cons.ActualizarDato("Tipo_sangre","tipo_sangre",id,datoActualizado); 
+            break;
+                
+            case "6"://Factor rh
+                do 
+                {
+                    Console.Write("Ingrese el factor Rh (positivo o negativo): ");
+                        datoActualizado = Console.ReadLine();
+
+                    if (!factorRH.IsMatch(datoActualizado))
+                    {
+                        Console.WriteLine("Por favor, ingrese un factor RH válido.");
+                    }
+                }
+                while (!factorRH.IsMatch(datoActualizado));
+                cons.ActualizarDato("Tipo_sangre","factor_rh",id,datoActualizado); 
+
+            break;
+
+            case "7": //Numeros
+                do
+                {
+                    Console.WriteLine("Teléfono del usuario:");
+                        datoActualizado = Console.ReadLine();
+
+                    if (!numeros.IsMatch(datoActualizado))
+                    {
+                        Console.WriteLine("Por favor, ingrese solo números.");
+                    }
+                }
+                while (!numeros.IsMatch(datoActualizado));
+                cons.ActualizarDato("Datos_usuario","Telefono",id,datoActualizado); 
+
+            break;
+        }
     }
+
+
 }
 

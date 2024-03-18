@@ -1,4 +1,6 @@
 namespace Datos;
+
+using System.Data.SqlClient;
 using System.Data.SQLite;
 class Consulta : DatosCli
 {
@@ -198,7 +200,21 @@ class Consulta : DatosCli
         }
         return totSoli + 1;
     }
-    
+    public void ActualizarDato(string tabla, string nombre_colum, string condicion,string nuevoDato)
+    {
+        query = $"UPDATE {tabla} SET {nombre_colum} = @DatoActualizado WHERE {condicion} = @DatoDesactualizado";
+        using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
+        {
+            conexion.Open();
+            using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
+            {
+                comando.Parameters.AddWithValue("@DatoActualizado", nuevoDato);
+                comando.Parameters.AddWithValue("@DatoDesactualizado", condicion);
+                    int comandoEjecutado = comando.ExecuteNonQuery();
+                Console.WriteLine($"Se actualizo {comandoEjecutado} en {tabla}");
+            }
+        }
+    }
     public void Prueba() //Parte para visualizar datos y pruebas 
     {
         query = "SELECT * FROM Datos_usuario";

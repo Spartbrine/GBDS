@@ -14,10 +14,10 @@ class MenuPrincipal
 
       
     /*        Metodos       */
-    /*    Registrar usuario */
-    /*    Recuperar datos   */
-    /*    Match sangre      */
-    /*    Baja usuario      */
-    /*    Modificar usuario */
-    /*    Contador de cada tipo de sangre */
+    /*    Registrar usuario */ //Completo
+    /*    Recuperar datos   */ //Completo
+    /*    Match sangre      */ //Proceso
+    /*    Baja usuario      */ //Falta
+    /*    Modificar usuario */ //Falta
+    /*    Contador de cada tipo de sangre */ //Falta
     
