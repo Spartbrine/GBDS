@@ -56,54 +56,91 @@ class MetodosOpc
         /*A la hora de la busqueda agregar en el query una sentencia and Estatus = Disponible; para que no muestre a los no disponibles*/
         Console.WriteLine("Buscando...");
        
-        if(cons.TipoSangre == "ab" && cons.FactorRH =="positivo")
-        {
-            query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' OR ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB' OR ts.tipo_sangre = 'B'";
-            cons.MatchSangre(query);
-        }
-        else if(cons.TipoSangre == "ab" && cons.FactorRH =="negativo")
-        {
-            query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
-                    FROM Datos_usuario du
-                    JOIN Tipo_sangre ts 
-                    WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
-            cons.MatchSangre(query);
-        }
-        else if(cons.TipoSangre == "a" && cons.FactorRH =="positivo")
-        {
-
-        }
-        else if(cons.TipoSangre == "a" && cons.FactorRH =="negativo")
-        {
-
-        }
-        else if(cons.TipoSangre == "b" && cons.FactorRH =="positivo")
-        {
-
-        }
-        else if(cons.TipoSangre == "b" && cons.FactorRH =="negativo")
-        {
-
-        }
-        else if(cons.TipoSangre == "o" && cons.FactorRH =="negativo")
-        {
-
-        }
-        else if(cons.TipoSangre == "o" && cons.FactorRH =="positivo")
-        {
-
-        }
-        
+        if(cons.TipoSangre == "ab" &&cons.FactorRH == "positivo")
+            {
+                query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                        FROM Datos_usuario du
+                        JOIN Tipo_sangre ts 
+                        WHERE ts.estatus = 'Disponible' AND ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB' OR ts.tipo_sangre = 'B'";
+                cons.MatchSangre(query);
+            }
+            else if(cons.TipoSangre == "ab" && cons.FactorRH == "negativo")
+            {
+                query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                        FROM Datos_usuario du
+                        JOIN Tipo_sangre ts 
+                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
+                cons.MatchSangre(query);
+            }
+            else if(cons.TipoSangre == "a" && cons.FactorRH == "positivo")
+            {
+                query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                        FROM Datos_usuario du
+                        JOIN Tipo_sangre ts 
+                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'Positivo'";
+                cons.MatchSangre(query);
+            }
+            else if(cons.TipoSangre == "a" && cons.FactorRH == "negativo")
+            {
+                query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                        FROM Datos_usuario du
+                        JOIN Tipo_sangre ts 
+                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'Negativo'";
+                cons.MatchSangre(query);
+            }
+            else if(cons.TipoSangre == "b" && cons.FactorRH == "positivo")
+            {
+                query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                        FROM Datos_usuario du
+                        JOIN Tipo_sangre ts 
+                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'B' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'Positivo'";
+                cons.MatchSangre(query);
+            }
+            else if(cons.TipoSangre == "b" && cons.FactorRH == "negativo")
+            {
+                query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                        FROM Datos_usuario du
+                        JOIN Tipo_sangre ts 
+                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'B' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'Negativo'";
+                cons.MatchSangre(query);
+            }
+            else if(cons.TipoSangre == "o" && cons.FactorRH == "negativo")
+            {
+                query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                        FROM Datos_usuario du
+                        JOIN Tipo_sangre ts 
+                        WHERE ts.estatus = 'Disponible' AND ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo'";
+                cons.MatchSangre(query);
+            }
+            else if(cons.TipoSangre == "o" && cons.FactorRH == "positivo")
+            {
+                query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
+                        FROM Datos_usuario du
+                        JOIN Tipo_sangre ts 
+                        WHERE ts.estatus = 'Disponible' AND ts.tipo_sangre = 'O' AND ts.factor_rh = 'Positivo'";
+                cons.MatchSangre(query);
+            }
+        cons.RegistroSoli("");
     }
     public void BajaUsuario() //Este metodo debe actualizar el estatus y agregar observaciones
     {
         Regex estatusRgx = new Regex(@"^(Disponible|Baja definitiva|Baja temporal)$", RegexOptions.IgnoreCase); 
-        string id = "";
-        DatosBasicos();
-        id = cons.BuscarDatosSinID(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
+        string id = "", resp = "";
+        Console.WriteLine("¿Cuenta con el ID del usuario? (S/N)");
+            resp = Console.ReadLine().ToLower();
+        switch(resp)
+        {
+            case "s":
+                Console.WriteLine("ID del usuario:");
+                    id = Console.ReadLine();
+                cons.BuscarDatosConID(id);
+                
+            break;
+            case "n":
+                DatosBasicos();
+                id = cons.BuscarDatosSinID(cons.Name, cons.ApellidoPat, cons.ApellidoMat);    
+            break;
+        }
         if(id!=null)
         {
             Console.WriteLine("ID del usuario:" + id);
@@ -131,9 +168,22 @@ class MetodosOpc
         Regex letras = new Regex( @"^[a-zA-Z]+$");
 
         
-        string id = "";
-        DatosBasicos();
-        id = cons.BuscarDatosSinID(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
+        string id = "", resp = "";
+        Console.WriteLine("¿Cuenta con el ID del usuario? (S/N)");
+            resp = Console.ReadLine().ToLower();
+        switch(resp)
+        {
+            case "s":
+                Console.WriteLine("ID del usuario:");
+                    id = Console.ReadLine();
+                cons.BuscarDatosConID(id);
+                
+            break;
+            case "n":
+                DatosBasicos();
+                id = cons.BuscarDatosSinID(cons.Name, cons.ApellidoPat, cons.ApellidoMat);    
+            break;
+        }
         if(id!=null)
         {
             Console.WriteLine("ID del usuario:" + id);

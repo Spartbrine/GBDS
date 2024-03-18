@@ -126,6 +126,7 @@ class Consulta : DatosCli
                     else
                     {
                         Console.WriteLine("Usuario no encontrado.");
+                        return;
                     }
                 }
             }
@@ -172,6 +173,7 @@ class Consulta : DatosCli
                     else
                     {
                         Console.WriteLine("Usuario no encontrado.");
+                        return "";
                     }
                 }
             }
@@ -182,7 +184,7 @@ class Consulta : DatosCli
     public void ContadorDonantes()
     {
         query = "SELECT * FROM Tipo_sangre WHERE estatus = 'DISPONIBLE' ORDER BY tipo_sangre";
-        using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+        using (SQLiteConnection conexion = new SQLiteConnection(connectionString)) //Este es para los que estan disponibles
         {
             conexion.Open();
             using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
@@ -202,6 +204,27 @@ class Consulta : DatosCli
                     {
                         Console.WriteLine("No hay donantes disponibles.");
                     }
+                }
+            }
+        }
+        query2 = "SELECT * FROM Tipo_sangre WHERE estatus = 'BAJA TEMPORAL' OR estatus = 'BAJA DEFINITIVA' ORDER BY tipo_sangre";
+        using (SQLiteConnection conexion2 = new SQLiteConnection(connectionString)) //Este es para los que estan disponibles
+        {
+            conexion2.Open();
+            using(SQLiteCommand comando2 = new SQLiteCommand(query2, conexion2))
+            {
+                using(SQLiteDataReader reader2 = comando2.ExecuteReader())
+                {
+                    if(reader2.HasRows)
+                    {
+                        Console.WriteLine("Donantes con baja:");
+                        Console.WriteLine($"| ID | TS | Factor RH |{"Tipo de baja", -15}|");
+                        while(reader2.Read())
+                        {
+                            Console.WriteLine($"|{reader2["id"].ToString().PadRight(4)}|{reader2["tipo_sangre"].ToString().PadRight(4)}|{reader2["factor_rh"].ToString().PadRight(11)}|{reader2["estatus"].ToString().PadRight(15)}|");
+                        }
+                    }
+                    
                 }
             }
         }
@@ -230,10 +253,6 @@ class Consulta : DatosCli
                 }
             }
         }
-    }
-    public void BajaUsuario()
-    {
-        
     }
     public int ContadorIDS()
     {
