@@ -108,9 +108,9 @@ class Consulta : DatosCli
 
             using (SQLiteCommand comando = new SQLiteCommand(query, conexion))
             {
-                comando.Parameters.AddWithValue("@NombreUsuario", nombreUsuario);
-                comando.Parameters.AddWithValue("@ApellidoPaterno", apellidoPaterno);
-                comando.Parameters.AddWithValue("@ApellidoMaterno", apellidoMaterno); // Agrega el parámetro para el apellido materno
+                comando.Parameters.AddWithValue("@NombreUsuario", nombreUsuario.ToUpper());
+                comando.Parameters.AddWithValue("@ApellidoPaterno", apellidoPaterno.ToUpper());
+                comando.Parameters.AddWithValue("@ApellidoMaterno", apellidoMaterno.ToUpper()); // Agrega el parámetro para el apellido materno
 
                 using (SQLiteDataReader reader = comando.ExecuteReader())
                 {

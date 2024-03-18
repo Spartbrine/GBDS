@@ -18,6 +18,6 @@ class MenuPrincipal
     /*    Recuperar datos   */ //Completo
     /*    Match sangre      */ //Proceso
     /*    Baja usuario      */ //Falta
-    /*    Modificar usuario */ //Falta
+    /*    Modificar usuario */ //Completo
     /*    Contador de cada tipo de sangre */ //Falta
     
