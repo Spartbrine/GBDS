@@ -292,13 +292,16 @@ class MetodosOpc
         {
             Console.WriteLine("Teléfono del usuario:");
                 cons.Telefono = Console.ReadLine();
-
+            if (cons.Telefono.Length != 10)
+            {
+                Console.WriteLine("El número de teléfono debe tener exactamente 10 dígitos.");
+            }
             if (!numeros.IsMatch(cons.Telefono))
             {
                 Console.WriteLine("Por favor, ingrese solo números.");
             }
         }
-        while (!numeros.IsMatch(cons.Telefono));
+        while (!numeros.IsMatch(cons.Telefono)|| cons.Telefono.Length != 10);
 
         Console.WriteLine("Dirección del usuaio:");
             cons.Direccion = Console.ReadLine();
