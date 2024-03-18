@@ -1,5 +1,5 @@
 namespace Datos;
-abstract class DatosCli
+abstract class DatosCli //Con la separación de achivos tiene más sentido utilizar abstract
 {
     protected string factorRH, nombre, apellido1, apellido2, direccion, estatus, grupoSanguineo, descripcion;
     protected string telefono;

@@ -1,6 +1,4 @@
 namespace Datos;
-
-using System.Data.SqlClient;
 using System.Data.SQLite;
 class Consulta : DatosCli
 {
