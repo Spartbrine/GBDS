@@ -95,15 +95,13 @@ class MetodosOpc
     public void ModificarUsuario() //Utilizar update
     {
         Regex letras = new Regex( @"^[a-zA-Z]+$");
-        string id = "", opcion="";
+        string id = "";
         DatosBasicos();
         id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
         if(id!=null)
         {
-            Console.WriteLine(id);
-            Console.WriteLine("¿Qué apartado desea modificar del usuario?");
-            Console.WriteLine("1.- Nombre \n2.- Apellido paterno \n3.- Apellido materno \n 4.-Dirección \n5.- Tipo de sangre \n6.- Factor RH \n7.- Télefono");
-                opcion = Console.ReadLine();
+            Console.WriteLine("ID del usuario:" + id);
+            
                 
             
         }        
@@ -205,5 +203,12 @@ class MetodosOpc
             cons.Direccion = Console.ReadLine();
     }
 
+    public void MenuModif()
+    {
+        string opcion="";
+        Console.WriteLine("¿Qué apartado desea modificar del usuario?");
+            Console.WriteLine("1.- Nombre \n2.- Apellido paterno \n3.- Apellido materno \n 4.-Dirección \n5.- Tipo de sangre \n6.- Factor RH \n7.- Télefono");
+                opcion = Console.ReadLine();
+    }
 }
 
