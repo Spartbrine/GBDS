@@ -94,7 +94,45 @@ class Consulta : DatosCli
             }
         }
     }
-    public string BuscarDatos(string nombreUsuario, string apellidoPaterno, string apellidoMaterno)
+    public void BuscarDatosConID(string id)
+    {
+        query = @"
+            SELECT du.ID, du.Nombre, du.Apellido_paterno, du.Apellido_materno, ts.factor_rh, ts.tipo_sangre, ts.estatus, ts.Observaciones, du.Telefono, du.Direccion
+            FROM Datos_usuario du
+            JOIN Tipo_sangre ts ON du.ID = ts.id
+            WHERE du.ID = @id";
+        using(SQLiteConnection  conexion = new SQLiteConnection(connectionString))
+        {
+            conexion.Open();
+            using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
+            {
+                comando.Parameters.AddWithValue("@id", id);
+                using(SQLiteDataReader reader = comando.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        Console.WriteLine("Datos del usuario encontrado:");
+                        Console.WriteLine($"ID: {reader["ID"]}");
+                        Console.WriteLine($"Nombre: {reader["Nombre"]}");
+                        Console.WriteLine($"Apellido Paterno: {reader["Apellido_paterno"]}");
+                        Console.WriteLine($"Apellido Materno: {reader["Apellido_materno"]}");
+                        Console.WriteLine($"Factor RH: {reader["Factor_RH"]}");
+                        Console.WriteLine($"Tipo de Sangre: {reader["Tipo_sangre"]}");
+                        Console.WriteLine($"Estatus: {reader["Estatus"]}");
+                        Console.WriteLine($"Observaciones: {reader["Observaciones"]}");
+                        Console.WriteLine($"Télefono: {reader["Telefono"]}");
+                        Console.WriteLine($"Dirección: {reader["Direccion"]}");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Usuario no encontrado.");
+                    }
+                }
+            }
+        } 
+
+    }
+    public string BuscarDatosSinID(string nombreUsuario, string apellidoPaterno, string apellidoMaterno)
     {
         string id = "";
         query = @"
@@ -141,7 +179,33 @@ class Consulta : DatosCli
 
         return id;
     }
-    //COMPLETO
+    public void ContadorDonantes()
+    {
+        query = "SELECT * FROM Tipo_sangre WHERE estatus = 'DISPONIBLE' ORDER BY tipo_sangre";
+        using (SQLiteConnection conexion = new SQLiteConnection(connectionString))
+        {
+            conexion.Open();
+            using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
+            {
+                using(SQLiteDataReader reader = comando.ExecuteReader())
+                {
+                    if(reader.HasRows)
+                    {
+                        Console.WriteLine("Donantes disponibles:");
+                        Console.WriteLine($"| ID | TS | Factor RH |");
+                        while(reader.Read())
+                        {
+                            Console.WriteLine($"|{reader["id"].ToString().PadRight(4)}|{reader["tipo_sangre"].ToString().PadRight(4)}|{reader["factor_rh"].ToString().PadRight(11)}|");
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("No hay donantes disponibles.");
+                    }
+                }
+            }
+        }
+    }
     public void MatchSangre(string query)
     {
         bool donadoresEncontrados = false;

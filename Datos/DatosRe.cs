@@ -26,9 +26,23 @@ class MetodosOpc
    //COMPLETO
     public void RecuperarDatos() //Este con un select de la tabla Tipo_sangre y Datos_usuario con join
     {
-        string? id="";
-        DatosBasicos();
-        id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
+        string? id="", resp = "";
+        Console.WriteLine("¿Cuenta con el ID del usuario? (S/N)");
+            resp = Console.ReadLine().ToLower();
+        switch(resp)
+        {
+            case "s":
+                Console.WriteLine("ID del usuario:");
+                    id = Console.ReadLine();
+                cons.BuscarDatosConID(id);
+                
+            break;
+            case "n":
+                DatosBasicos();
+                id = cons.BuscarDatosSinID(cons.Name, cons.ApellidoPat, cons.ApellidoMat);    
+            break;
+        }
+        
         cons.RegistroSoli(id);
 
     }
@@ -89,7 +103,7 @@ class MetodosOpc
         Regex estatusRgx = new Regex(@"^(Disponible|Baja definitiva|Baja temporal)$", RegexOptions.IgnoreCase); 
         string id = "";
         DatosBasicos();
-        id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
+        id = cons.BuscarDatosSinID(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
         if(id!=null)
         {
             Console.WriteLine("ID del usuario:" + id);
@@ -119,7 +133,7 @@ class MetodosOpc
         
         string id = "";
         DatosBasicos();
-        id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
+        id = cons.BuscarDatosSinID(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
         if(id!=null)
         {
             Console.WriteLine("ID del usuario:" + id);
@@ -130,7 +144,7 @@ class MetodosOpc
     }
     public void ContadorDonantes() //Usar un count de donantes donde estatus sea disponible 
     {
-
+        cons.ContadorDonantes();
     }
 
     public void DatosBasicos()
