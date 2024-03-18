@@ -102,8 +102,6 @@ class MetodosOpc
         {
             Console.WriteLine("ID del usuario:" + id);
             MenuModif(id);
-                
-            
         }        
     }
     public void ContadorDonantes() //Usar un count de donantes donde estatus sea disponible 
@@ -208,7 +206,7 @@ class MetodosOpc
         Regex numeros = new Regex(@"^\d+$");
         Regex tipoSangre = new Regex(@"^(A|B|O|AB|)$", RegexOptions.IgnoreCase);
         Regex factorRH = new Regex(@"^(positivo|negativo)$", RegexOptions.IgnoreCase); 
-        string opcion="", query = "", datoActualizado="";
+        string opcion="", datoActualizado="";
         
         Console.WriteLine("¿Qué apartado desea modificar del usuario?");
             Console.WriteLine("1.- Nombre \n2.- Apellido paterno \n3.- Apellido materno \n 4.-Dirección \n5.- Tipo de sangre \n6.- Factor RH \n7.- Télefono");
@@ -219,25 +217,25 @@ class MetodosOpc
             case "1": //Nombre
                 Console.WriteLine("Nombre por el que desea modificar:");
                     datoActualizado = Console.ReadLine();
-                cons.ActualizarDato("Datos_usuario","Nombre",id,datoActualizado);    
+                cons.ActualizarDato("Datos_usuario","Nombre","ID",datoActualizado, id);    
             break;
             
             case "2": //Apellido paterno
                 Console.WriteLine("Apellido paterno por el que desea modificar:");
                     datoActualizado = Console.ReadLine();
-                cons.ActualizarDato("Datos_usuario","Apellido_paterno",id,datoActualizado);  
+                cons.ActualizarDato("Datos_usuario","Apellido_paterno","ID",datoActualizado, id);  
             break;
 
             case "3": //Apellido materno
                 Console.WriteLine("Apellido materno por el que desea modificar:");
                     datoActualizado = Console.ReadLine();
-                cons.ActualizarDato("Datos_usuario","Apellido_materno",id,datoActualizado); 
+                cons.ActualizarDato("Datos_usuario","Apellido_materno","ID",datoActualizado, id); 
             break;
 
             case "4": //Direccion
                 Console.WriteLine("Dirección por la que desea modificar:");
                     datoActualizado = Console.ReadLine();
-                cons.ActualizarDato("Datos_usuario","Direccion",id,datoActualizado); 
+                cons.ActualizarDato("Datos_usuario","Direccion","ID",datoActualizado, id); 
             break;
 
             case "5":   //Tipo de sangre
@@ -252,7 +250,7 @@ class MetodosOpc
                         }
                     }
                     while (!tipoSangre.IsMatch(datoActualizado));
-                cons.ActualizarDato("Tipo_sangre","tipo_sangre",id,datoActualizado); 
+                cons.ActualizarDato("Tipo_sangre","tipo_sangre","id",datoActualizado, id); 
             break;
                 
             case "6"://Factor rh
@@ -267,11 +265,11 @@ class MetodosOpc
                     }
                 }
                 while (!factorRH.IsMatch(datoActualizado));
-                cons.ActualizarDato("Tipo_sangre","factor_rh",id,datoActualizado); 
+                cons.ActualizarDato("Tipo_sangre","factor_rh","id",datoActualizado, id); 
 
             break;
 
-            case "7": //Numeros
+            case "7": //Numeros 
                 do
                 {
                     Console.WriteLine("Teléfono del usuario:");
@@ -283,7 +281,7 @@ class MetodosOpc
                     }
                 }
                 while (!numeros.IsMatch(datoActualizado));
-                cons.ActualizarDato("Datos_usuario","Telefono",id,datoActualizado); 
+                cons.ActualizarDato("Datos_usuario","Telefono","ID",datoActualizado, id); 
 
             break;
         }

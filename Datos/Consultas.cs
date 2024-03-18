@@ -200,7 +200,7 @@ class Consulta : DatosCli
         }
         return totSoli + 1;
     }
-    public void ActualizarDato(string tabla, string nombre_colum, string condicion,string nuevoDato)
+    public void ActualizarDato(string tabla, string nombre_colum, string condicion,string nuevoDato, string DatoDesactualizado)
     {
         query = $"UPDATE {tabla} SET {nombre_colum} = @DatoActualizado WHERE {condicion} = @DatoDesactualizado";
         using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
@@ -208,8 +208,8 @@ class Consulta : DatosCli
             conexion.Open();
             using(SQLiteCommand comando = new SQLiteCommand(query, conexion))
             {
-                comando.Parameters.AddWithValue("@DatoActualizado", nuevoDato);
-                comando.Parameters.AddWithValue("@DatoDesactualizado", condicion);
+                comando.Parameters.AddWithValue("@DatoActualizado", nuevoDato.ToUpper());
+                comando.Parameters.AddWithValue("@DatoDesactualizado", DatoDesactualizado);
                     int comandoEjecutado = comando.ExecuteNonQuery();
                 Console.WriteLine($"Se actualizo {comandoEjecutado} en {tabla}");
             }
