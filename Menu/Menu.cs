@@ -14,7 +14,7 @@ class MenuPrincipal
     /*        Metodos       */      
     /*    Registrar usuario */ //   Completo
     /*    Recuperar datos   */ //   Completo
-    /*    Match sangre      */ //   Proceso
+    /*    Match sangre      */ //   Completo
     /*    Baja usuario      */ //   Completo (Lo cambie por cambiar estatus, porque puede pasar de baja temporal a disponible)
     /*    Modificar usuario */ //   Completo
     /*    Contador de cada tipo de sangre */ // Completo
