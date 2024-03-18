@@ -61,7 +61,7 @@ class MetodosOpc
                 query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                         FROM Datos_usuario du
                         JOIN Tipo_sangre ts 
-                        WHERE ts.estatus = 'Disponible' AND ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB' OR ts.tipo_sangre = 'B'";
+                        WHERE ts.estatus = 'DISPONIBLE' ORDER BY ts.tipo_sangre";
                 cons.MatchSangre(query);
             }
             else if(cons.TipoSangre == "ab" && cons.FactorRH == "negativo")
@@ -69,7 +69,7 @@ class MetodosOpc
                 query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                         FROM Datos_usuario du
                         JOIN Tipo_sangre ts 
-                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'negativo') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'negativo')";
+                        WHERE ts.estatus = 'DISPONIBLE' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'NEGATIVO') OR (ts.tipo_sangre = 'A' AND ts.factor_rh = 'NEGATIVO') OR (ts.tipo_sangre = 'AB' AND ts.factor_rh = 'NEGATIVO') OR (ts.tipo_sangre = 'B' AND ts.factor_rh = 'NEGATIVO') ORDER BY ts.tipo_sangre";
                 cons.MatchSangre(query);
             }
             else if(cons.TipoSangre == "a" && cons.FactorRH == "positivo")
@@ -77,7 +77,7 @@ class MetodosOpc
                 query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                         FROM Datos_usuario du
                         JOIN Tipo_sangre ts 
-                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'Positivo'";
+                        WHERE ts.estatus = 'DISPONIBLE' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A') ORDER BY ts.tipo_sangre";
                 cons.MatchSangre(query);
             }
             else if(cons.TipoSangre == "a" && cons.FactorRH == "negativo")
@@ -85,7 +85,7 @@ class MetodosOpc
                 query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                         FROM Datos_usuario du
                         JOIN Tipo_sangre ts 
-                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'Negativo'";
+                        WHERE ts.estatus = 'DISPONIBLE' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'A' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'NEGATIVO' ORDER BY ts.tipo_sangre";
                 cons.MatchSangre(query);
             }
             else if(cons.TipoSangre == "b" && cons.FactorRH == "positivo")
@@ -93,7 +93,7 @@ class MetodosOpc
                 query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                         FROM Datos_usuario du
                         JOIN Tipo_sangre ts 
-                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'B' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'Positivo'";
+                        WHERE ts.estatus = 'DISPONIBLE' AND ts.tipo_sangre = 'O'  OR ts.tipo_sangre = 'B' ORDER BY ts.tipo_sangre";
                 cons.MatchSangre(query);
             }
             else if(cons.TipoSangre == "b" && cons.FactorRH == "negativo")
@@ -101,7 +101,7 @@ class MetodosOpc
                 query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                         FROM Datos_usuario du
                         JOIN Tipo_sangre ts 
-                        WHERE ts.estatus = 'Disponible' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'B' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'Negativo'";
+                        WHERE ts.estatus = 'DISPONIBLE' AND (ts.tipo_sangre = 'O' OR ts.tipo_sangre = 'B' OR ts.tipo_sangre = 'AB') AND ts.factor_rh = 'NEGATIVO' ORDER BY ts.tipo_sangre";
                 cons.MatchSangre(query);
             }
             else if(cons.TipoSangre == "o" && cons.FactorRH == "negativo")
@@ -109,7 +109,7 @@ class MetodosOpc
                 query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                         FROM Datos_usuario du
                         JOIN Tipo_sangre ts 
-                        WHERE ts.estatus = 'Disponible' AND ts.tipo_sangre = 'O' AND ts.factor_rh = 'Negativo'";
+                        WHERE ts.estatus = 'DISPONIBLE' AND (ts.tipo_sangre = 'O' AND ts.factor_rh = 'NEGATIVO')";
                 cons.MatchSangre(query);
             }
             else if(cons.TipoSangre == "o" && cons.FactorRH == "positivo")
@@ -117,7 +117,7 @@ class MetodosOpc
                 query = @"SELECT ts.id, ts.factor_rh, ts.tipo_sangre, du.Nombre, du.Apellido_paterno, du.Apellido_materno, du.Telefono, du.Direccion 
                         FROM Datos_usuario du
                         JOIN Tipo_sangre ts 
-                        WHERE ts.estatus = 'Disponible' AND ts.tipo_sangre = 'O' AND ts.factor_rh = 'Positivo'";
+                        WHERE ts.estatus = 'DISPONIBLE' AND ts.tipo_sangre = 'O' ORDER BY ts.factor_rh";
                 cons.MatchSangre(query);
             }
         cons.RegistroSoli("");

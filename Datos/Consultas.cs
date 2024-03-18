@@ -231,8 +231,6 @@ class Consulta : DatosCli
     }
     public void MatchSangre(string query)
     {
-        bool donadoresEncontrados = false;
-        
         using(SQLiteConnection conexion = new SQLiteConnection(connectionString))
         {
             conexion.Open();
@@ -240,15 +238,28 @@ class Consulta : DatosCli
             {
                 using (SQLiteDataReader reader = comando.ExecuteReader())
                 {
-                    Console.WriteLine($"{"Nombre(s)", -25}|{"Apellido paterno", -15 }|{"Apellido materno", -15}|{"Factor RH", -10}|{"TS", -2}|{"Télefono", -10}|{"Dirección", -30}");
+                    List<string> donadoresCompatibles = new List<string>(); // Lista para almacenar los registros compatibles
+
                     while(reader.Read())
                     {
-                        if (!donadoresEncontrados)
+                        // Construir una cadena representando el registro y agregarlo a la lista si no se encuentra ya en ella
+                        string registro = $"|{reader["Nombre"].ToString().PadRight(23)}|{reader["Apellido_paterno"].ToString().PadRight(18)}|{reader["Apellido_materno"].ToString().PadRight(18)}|{reader["Factor_rh"].ToString().PadRight(11)}|{reader["tipo_sangre"].ToString().PadRight(11)}|{reader["telefono"].ToString().PadRight(10)}|{reader["direccion"].ToString().PadRight(50)}|";
+                        if (!donadoresCompatibles.Contains(registro)) //Esto sirve para no reimprimir al mismo donador más de una vez
                         {
-                            Console.WriteLine("\nDonador(es) encontrado(s):");
-                            donadoresEncontrados = true;
+                            donadoresCompatibles.Add(registro);
                         }
-                        Console.WriteLine($"{reader["Nombre"].ToString().PadRight(25)}|{reader["Apellido_paterno"].ToString().PadRight(15)}|{reader["Apellido_materno"].ToString().PadRight(15)}|{reader["Factor_rh"].ToString().PadRight(10)}|{reader["Tipo_sangre"].ToString().PadRight(2)}|{reader["Telefono"].ToString().PadRight(10)}|{reader["Direccion"].ToString().PadRight(30)}");
+                    }
+
+                    // Imprimir los registros compatibles almacenados en la lista
+                    Console.WriteLine($"|{"Nombre(s)", -23}|{"Apellido paterno", -18 }|{"Apellido materno", -18}|{"Factor RH", -11}|{"Tipo sangre", -11}|{"Télefono", -10}|{"Dirección", -50}|");
+                    foreach (string registro in donadoresCompatibles)
+                    {
+                        Console.WriteLine(registro);
+                    }
+
+                    if (donadoresCompatibles.Count == 0)
+                    {
+                        Console.WriteLine("No se encontraron donadores compatibles.");
                     }
                 }
             }
