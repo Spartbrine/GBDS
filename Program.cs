@@ -1,7 +1,5 @@
 ﻿namespace GBDS;
 using Menu;
-using System.Data.SqlClient;
-using System.Data.SQLite;
 
 class Program
 {
@@ -9,8 +7,7 @@ class Program
     {
         Operaciones opc = new Operaciones();
         opc.Metodo();
-    }
-       
+    }       
 }
 
 

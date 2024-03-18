@@ -33,7 +33,6 @@ class Consulta : DatosCli
                     int filasInsertadas = comando.ExecuteNonQuery();
                 Console.WriteLine($"Se inserto {filasInsertadas} fila en la tabla.");
                 Console.WriteLine($"El ID de su usuario es: {id}");
-
             }
         }
 
@@ -66,6 +65,10 @@ class Consulta : DatosCli
         string query = "INSERT INTO Solicitudes (id, id_solicitante, fecha) VALUES (@idSolicitud, @idUsuario, @fecha)";
             numSoli = ContadorSoli();
         // Crear y abrir la conexión
+        if(usuarioId == ""|| usuarioId == null)
+        {
+            usuarioId="N/A";
+        }
         using (SQLiteConnection connection = new SQLiteConnection(connectionString))
         {
             connection.Open();
@@ -214,6 +217,20 @@ class Consulta : DatosCli
                 Console.WriteLine($"Se actualizo {comandoEjecutado} en {tabla}");
             }
         }
+    }
+    public void BajaUsuario(string id)
+    {
+        ActualizarDato("Tipo_sangre", "estatus", "id", estatus, id);
+            do
+            {
+                Console.Write("Ingrese la observación: ");
+                    Desc = Console.ReadLine();
+                if(Desc=="")
+                {
+                    Console.WriteLine("Necesita poner observaciones");
+                }
+            }while(Desc=="");
+        ActualizarDato("Tipo_sangre", "Observaciones", "id", Desc, id);
     }
     public void Prueba() //Parte para visualizar datos y pruebas 
     {

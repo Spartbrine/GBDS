@@ -1,6 +1,5 @@
 namespace Menu;
 using Datos;
-using System.Data.SQLite;
 
 class Operaciones
 {
@@ -44,10 +43,8 @@ class Operaciones
                     break;
                     case 4004: //Esto es para que se hagan pruebas
                         con.Prueba();
-                    break;
-                        
+                    break;   
                 }
-                
             }
             catch(FormatException)
             {

@@ -4,8 +4,6 @@ using System.Text.RegularExpressions;
 class MetodosOpc
 {
     Consulta cons = new Consulta();
-    
-
     //COMPLETO
     public void RegistrarUsuario() 
     {
@@ -84,17 +82,41 @@ class MetodosOpc
         {
 
         }
+        
     }
     public void BajaUsuario() //Este metodo debe actualizar el estatus y agregar observaciones
     {
+        Regex estatusRgx = new Regex(@"^(Disponible|Baja definitiva|Baja temporal)$", RegexOptions.IgnoreCase); 
+        string id = "";
         DatosBasicos();
-        Console.WriteLine(cons.Name, cons.ApellidoPat, cons.ApellidoMat);  
+        id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
+        if(id!=null)
+        {
+            Console.WriteLine("ID del usuario:" + id);
+            do //Estatus
+            {
+                Console.Write("Ingrese el estatus (Disponible, Baja definitiva o Baja temporal): ");
+                cons.Estatus = Console.ReadLine();
+
+                if (!estatusRgx.IsMatch(cons.Estatus))
+                {
+                    Console.WriteLine("Por favor, ingrese un estatus válido.");
+                }
+            }
+            while (!estatusRgx.IsMatch(cons.Estatus));
+
+            cons.BajaUsuario(id);
+        }  
+        cons.RegistroSoli(id);
+
     }
     //En modificaciones al usuario se puede modificar apellidos, nombres, etc? Sí
     // O unicamente debo poder modificar el estatus? no
     public void ModificarUsuario() //Utilizar update
     {
         Regex letras = new Regex( @"^[a-zA-Z]+$");
+
+        
         string id = "";
         DatosBasicos();
         id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
@@ -102,7 +124,9 @@ class MetodosOpc
         {
             Console.WriteLine("ID del usuario:" + id);
             MenuModif(id);
-        }        
+        }       
+        cons.RegistroSoli(id);
+
     }
     public void ContadorDonantes() //Usar un count de donantes donde estatus sea disponible 
     {
@@ -112,12 +136,27 @@ class MetodosOpc
     public void DatosBasicos()
     { //Necesito un regex para que no se puedan ingresar numeros en los nombres, y apellidos
 
-        Console.WriteLine("Mencione el nombre del usuario");
-            cons.Name = Console.ReadLine();
-        Console.WriteLine("Mencione el apellido paterno del usuario");
-            cons.ApellidoPat = Console.ReadLine();
-        Console.WriteLine("Mencione el apellido materno del usuario");
-            cons.ApellidoMat = Console.ReadLine();
+        Regex letrasRgx = new Regex(@"^[a-zA-ZáéíóúüÁÉÍÓÚÜ\s]+$");
+        do
+        {
+            Console.WriteLine("Mencione el nombre del usuario");
+                cons.Name = Console.ReadLine();
+            if(!letrasRgx.IsMatch(cons.Name)) Console.WriteLine("Texto no válido");
+        }while(!letrasRgx.IsMatch(cons.Name));
+        do
+        {
+            Console.WriteLine("Mencione el apellido paterno del usuario");
+                cons.ApellidoPat = Console.ReadLine();
+            if(!letrasRgx.IsMatch(cons.ApellidoPat)) Console.WriteLine("Texto no válido");
+        }while(!letrasRgx.IsMatch(cons.ApellidoPat));
+        do
+        {
+            Console.WriteLine("Mencione el apellido materno del usuario");
+                cons.ApellidoMat = Console.ReadLine();
+            if(!letrasRgx.IsMatch(cons.ApellidoMat)) Console.WriteLine("Texto no válido");
+        }while(!letrasRgx.IsMatch(cons.ApellidoMat));
+
+        
     }
     public void DatosSangre() //id (ya debe estar registrado), factor rh, tipo de sangre, estatus y observaciones
     {
@@ -200,7 +239,6 @@ class MetodosOpc
         Console.WriteLine("Dirección del usuaio:");
             cons.Direccion = Console.ReadLine();
     }
-
     public void MenuModif(string id)
     {
         Regex numeros = new Regex(@"^\d+$");
@@ -285,6 +323,9 @@ class MetodosOpc
 
             break;
         }
+
+        cons.RegistroSoli(id);
+
     }
 
 
