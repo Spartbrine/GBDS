@@ -94,13 +94,18 @@ class MetodosOpc
     // O unicamente debo poder modificar el estatus? no
     public void ModificarUsuario() //Utilizar update
     {
-        string id = "";
+        Regex letras = new Regex( @"^[a-zA-Z]+$");
+        string id = "", opcion="";
         DatosBasicos();
         id = cons.BuscarDatos(cons.Name, cons.ApellidoPat, cons.ApellidoMat);
-        if(id!="")
+        if(id!=null)
         {
             Console.WriteLine(id);
             Console.WriteLine("¿Qué apartado desea modificar del usuario?");
+            Console.WriteLine("1.- Nombre \n2.- Apellido paterno \n3.- Apellido materno \n 4.-Dirección \n5.- Tipo de sangre \n6.- Factor RH \n7.- Télefono");
+                opcion = Console.ReadLine();
+                
+            
         }        
     }
     public void ContadorDonantes() //Usar un count de donantes donde estatus sea disponible 

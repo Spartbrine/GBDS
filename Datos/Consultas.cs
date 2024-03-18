@@ -29,7 +29,7 @@ class Consulta : DatosCli
                 comando.Parameters.AddWithValue("@telefono", Telefono.ToUpper());
                 comando.Parameters.AddWithValue("@direccion", Direccion.ToUpper());
                     int filasInsertadas = comando.ExecuteNonQuery();
-                Console.WriteLine($"Se inserto {filasInsertadas} la fila en la tabla.");
+                Console.WriteLine($"Se inserto {filasInsertadas} fila en la tabla.");
                 Console.WriteLine($"El ID de su usuario es: {id}");
 
             }
@@ -164,7 +164,10 @@ class Consulta : DatosCli
             }
         }
     }
-    
+    public void BajaUsuario()
+    {
+        
+    }
     public int ContadorIDS()
     {
         int id = 0;
