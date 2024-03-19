@@ -48,11 +48,32 @@ class MetodosOpc
     }
     public void MatchSangre() //En caso de buscar compatibilidad
     {
+        Regex tipoSangre = new Regex(@"^(A|B|O|AB|)$", RegexOptions.IgnoreCase);
+        Regex factorRH = new Regex(@"^(positivo|negativo)$", RegexOptions.IgnoreCase); 
         string query ="";
-        Console.Write("Tipo de sangre solicitante:");
-            cons.TipoSangre = Console.ReadLine().ToLower();
-        Console.WriteLine("Factor RH del solicitante:");
-            cons.FactorRH = Console.ReadLine().ToLower();
+            do //Tipo de sangre
+            {
+                Console.WriteLine("Tipo de sangre solicitante");
+                    cons.TipoSangre = Console.ReadLine();
+
+                if (!tipoSangre.IsMatch(cons.TipoSangre))
+                {
+                    Console.WriteLine("Por favor, ingrese un tipo de sangre válido.");
+                }
+            }
+            while (!tipoSangre.IsMatch(cons.TipoSangre));
+
+            do //Factor rh
+            {
+                Console.Write("Ingrese el factor Rh (positivo o negativo): ");
+                    cons.FactorRH = Console.ReadLine();
+
+                if (!factorRH.IsMatch(cons.FactorRH))
+                {
+                    Console.WriteLine("Por favor, ingrese un factor Rh válido.");
+                }
+            }
+            while (!factorRH.IsMatch(cons.FactorRH));
         /*A la hora de la busqueda agregar en el query una sentencia and Estatus = Disponible; para que no muestre a los no disponibles*/
         Console.WriteLine("Buscando...");
        
@@ -222,6 +243,7 @@ class MetodosOpc
 
         
     }
+   
     public void DatosSangre() //id (ya debe estar registrado), factor rh, tipo de sangre, estatus y observaciones
     {
         Regex tipoSangre = new Regex(@"^(A|B|O|AB|)$", RegexOptions.IgnoreCase);
@@ -374,7 +396,7 @@ class MetodosOpc
 
             break;
 
-            case "7": //Numeros 
+            case "7": //Telefono 
                 do
                 {
                     Console.WriteLine("Teléfono del usuario:");
