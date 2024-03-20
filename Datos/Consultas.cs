@@ -310,7 +310,7 @@ class Consulta : DatosCli
             }
         }
     }
-    public void BajaUsuario(string id)
+    public void BajaUsuario(string id) //Es ahora cambio de estatus
     {
         ActualizarDato("Tipo_sangre", "estatus", "id", estatus, id);
             do
